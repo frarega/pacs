@@ -1,9 +1,0 @@
-#---------------------------------------------
-#         Options file for integration
-#---------------------------------------------
-[equation]
-fun=-sin(t)		#f(t,y)
-sol=cos(t)		#exact solution
-
-[solver]
-method=rk23		#method to be used: either rk23 or rk45
