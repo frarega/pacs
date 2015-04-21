@@ -8,7 +8,7 @@
 
 polynomial::polynomial(): c() {};
 
-polynomial::polynomial(std::vector<scalar> const v): c(v) {};
+polynomial::polynomial(std::vector<scalar> const v): c(v) { trinZeros(); };
 	
 polynomial::polynomial(std::initializer_list<scalar> const l): c(l) { trimZeros(); };
 
@@ -161,10 +161,10 @@ std::istream & operator >> (std::istream & str, polynomial & r)
 	std::string scoeff;
 	scalar coeff;
 	bool end=false;
+	std::getline(str,scoeff);
+	std::istringstream strcoeff(scoeff);
 	while (!end)
 	{
-		std::getline(str,scoeff,' ');
-		std::istringstream strcoeff(scoeff);
   		strcoeff>>coeff;
   		if(strcoeff.fail()) end=true;
 		else newc.push_back(coeff);
