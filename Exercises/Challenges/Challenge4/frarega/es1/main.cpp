@@ -1,56 +1,75 @@
 #include <iostream>
 #include "polynomial.hpp"
 
+using namespace std;
+
+void test(polynomial a, polynomial b)
+{
+	cout << "a = "<< a << endl;
+	cout << "\tdegree: " << a.GetDegree()<< endl;
+	cout << "\tconstant term: " << a.GetCoefficient(0)<< endl;
+	cout << "a(0) = " << a(0) << endl;
+	cout << "a(1) = " << a(1) << endl;
+	cout << "a(-1) = " << a(-1) << endl;
+	cout << "a(0.5) = " << a(0.5) << endl<<endl;
+	cout << "b = "<< b << endl;
+	cout << "\tdegree: " << b.GetDegree()<< endl;
+	cout << "\tconstant term: " << b.GetCoefficient(0)<< endl;
+	cout << "b(0) = " << b(0) << endl;
+	cout << "b(1) = " << b(1) << endl;
+	cout << "b(-1) = " << b(-1) << endl;
+	cout << "b(0.5) = " << b(0.5) << endl<<endl;
+	cout << "a+b = "<< a+b << endl;
+	cout << "a-d = "<< a-b << endl;
+	cout << "a+=b: "<< (a+=b) << endl;
+	cout << "a = "<< a << endl;
+	cout << "a-=b: "<< (a-=b) << endl;
+	cout << "a = "<< a << endl;
+	cout << "a++ = "<< a++ << endl;
+	cout << "a = "<< a << endl;
+	cout << "++a = "<< ++a << endl;
+	cout << "a = "<< a << endl;
+	cout << "a-- = "<< a-- << endl;
+	cout << "a = "<< a << endl;
+	cout << "--a = "<< --a << endl;
+	cout << "a = "<< a << endl;
+	cout << "a*b: "<< a*b << endl;
+	cout << "a/b:" << endl;
+	try
+	{
+		auto div1= a/b;
+		cout << "\tquotient = " << div1.first << endl << "\tremainder = "<< div1.second << endl;
+		cout << "\ttest: quotient*dividend+remainder= " << div1.first* b + div1.second << endl;
+ 	}
+	catch (exception& e)
+	{
+		cout << e.what() << endl;
+	}
+	cout << "b/a:" << endl;
+	try
+	{
+		auto div2= b/a;
+		cout << "\tquotient = " << div2.first << endl << "\tremainder = "<< div2.second << endl;
+		cout << "\ttest: quotient*dividend+remainder= " << div2.first* a + div2.second << endl;
+ 	}
+	catch (exception& e)
+	{
+		cout << e.what() << endl;
+	}
+	cout<<endl;	
+}
+
 int main()
 {
-	using namespace std;
-	polynomial a({-1 , 0 ,0 ,1, 0 ,0}), b({0,0,0}),c({}),d({2,3,0,7,9});
-	std::cout << "a = "<< a << endl;
-	std::cout << "b = "<< b << endl;
-	std::cout << "c = "<< c << endl;
-	std::cout << "d = "<< d << endl;
-	std::cout << "Insert new polynomial:"<<endl;
-	polynomial e;
-	std::cin>>e;
-	std::cout << "e = "<< e << endl;	
-	std::cout << "degree of a = "<< a.GetDegree()<< endl;
-	std::cout << "degree of b = "<< b.GetDegree()<< endl;
-	std::cout << "degree of c = "<< b.GetDegree()<< endl;
-	std::cout << "third coefficient of a = "<< a.GetCoefficient(3)<< endl;
-	std::cout << "third coefficient of b = "<< b.GetCoefficient(3)<< endl;
-	std::cout << "a(0) = "<< a(0)<< endl;
-	std::cout << "a(1) = "<< a(1)<< endl;
-	std::cout << "a(-0.5) = "<< a(-0.5)<< endl;
-	std::cout << "b(100) = "<< b(100)<< endl;
-	std::cout << "b(0) = "<< b(0)<< endl;
-	std::cout << "a+d: "<< a+d << endl;
-	std::cout << "a+=d = "<< (a+=d) << endl;
-	std::cout << "a-d = "<< a-d << endl;
-	std::cout << "a-=d = "<< (a-=d) << endl;
-	std::cout << "a++ = "<< a++ << endl;
-	std::cout << "a = "<< a << endl;
-	std::cout << "++a = "<< ++a << endl;
-	std::cout << "a = "<< a << endl;
-	std::cout << "a-- = "<< a-- << endl;
-	std::cout << "a = "<< a << endl;
-	std::cout << "--a = "<< --a << endl;
-	std::cout << "a = "<< a << endl;
-	std::cout << "a*d: "<< a*d << endl;
-	std::cout << "a*=d = "<< (a*=d) << endl;
-	std::cout << "a = "<< a << endl;
-	std::cout << "d*b = "<< d*b << endl;
+	test(polynomial({-1,1,0}),polynomial({0}));
+	test(polynomial({3,4,5}),polynomial({2,3}));
 
-	polynomial q({0 , 0 ,0 ,-1, 3}), w({-2 , 0 ,1});
-
-	auto div= q/w;
-	cout << q << " / " << w << " :" << endl<< "quotient = " << div.first << endl << "remainder = "<< div.second << endl<< endl;
-
-	auto div2=w/q;
-	cout << w << " / " << q << " : " << endl<< "quotient = " << div2.first << endl << "remainder = "<< div2.second << endl<< endl;
-
-	auto div4 = q/polynomial({2});
-	cout << q << " / 2 : " << endl<< "quotient = " << div4.first << endl << "remainder = "<< div4.second << endl<< endl;
-	
+	polynomial a,b;
+	cout << "Insert a polynomial:"<<endl;
+	cin>>a;
+	cout << "Insert another polynomial:"<<endl;
+	cin>>b;
+	test(a,b);
 
 	return 0;
 }

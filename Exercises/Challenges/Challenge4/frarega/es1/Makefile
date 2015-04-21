@@ -1,14 +1,12 @@
-DEPS = polynomial.hpp
-OBJ = polynomial.o
 CXXFLAGS = -std=c++11
-SOURCE = main.cpp
 
-%.o: %.cpp $(DEPS)
-	$(CXX) $(CXXFLAGS) -c -o $@ $< 
-main: $(OBJ) $(SOURCE)
+main: polynomial.o main.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $^ 
+
+polynomial.o: polynomial.cpp polynomial.hpp scalar.hpp
+	$(CXX) $(CXXFLAGS) -c -o polynomial.o polynomial.cpp
 
 .PHONY: clean
 
 clean:
-	$(RM) $(OBJ) main
+	$(RM) polynomial.o main

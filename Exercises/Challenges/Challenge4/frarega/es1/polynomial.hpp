@@ -10,9 +10,9 @@ class polynomial
 {
 public:
 	polynomial();
-	//Initializator: coefficent are given beginning with the constant term
+	//Initializator: coefficent are given from the constant term to the leading term
 	polynomial(std::vector<scalar> const);
-	//Initializator: coefficent are given beginning with the constant term
+	//Initializator: coefficent are given from the constant term to the leading term
 	polynomial(std::initializer_list<scalar> const);
 	polynomial(polynomial const &)=default;
 	polynomial& operator=(polynomial const &)=default;
@@ -49,15 +49,14 @@ public:
 	friend std::ostream & operator << (std::ostream &, polynomial const &);
 
 	//! Input streaming operator
-	/*! Coefficent are given beginning with the constant term, 
-	    and must be separated with spaces. 
-	    The return carriage terminates the sequence
-	*/
+	/*! Coefficent are given from the constant term to the leading term and must be separated with spaces. 
+	    Just type "Enter" terminate the sequence
+	*/	
 	friend std::istream & operator >> (std::istream &, polynomial &);
 	
 
 private:
-	//! stores the coefficients (from 0 degree to n degree)
+	//! stores the coefficients (from the constant term to the leading term)
 	std::vector<scalar> c;
 	static std::vector<scalar> & trimZeros(std::vector<scalar> &);
 	polynomial & trimZeros();

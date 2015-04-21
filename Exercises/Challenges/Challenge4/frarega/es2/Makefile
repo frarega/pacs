@@ -1,9 +1,7 @@
-DEPS = polynomial.hpp polynomial_imp.hpp scalar.hpp
 CXXFLAGS = -std=c++11
-SOURCE = main.cpp
 
-main: $(SOURCE) $(DEPS)
-	$(CXX) $(CXXFLAGS) -o $@ $(SOURCE)
+main: main.cpp  polyEvaluator.hpp  polynomial.hpp  polynomial_imp.hpp  pow.hpp  scalar.hpp
+	$(CXX) $(CXXFLAGS) -o $@ main.cpp
 
 .PHONY: clean
 

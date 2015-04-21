@@ -8,7 +8,7 @@
 
 polynomial::polynomial(): c() {};
 
-polynomial::polynomial(std::vector<scalar> const v): c(v) { trinZeros(); };
+polynomial::polynomial(std::vector<scalar> const v): c(v) { trimZeros(); };
 	
 polynomial::polynomial(std::initializer_list<scalar> const l): c(l) { trimZeros(); };
 
@@ -18,12 +18,6 @@ polynomial & polynomial::operator -=(polynomial const & p) { return algebraicplu
 
 polynomial & polynomial::operator *=(polynomial const & p)
 {
-	/*std::vector<scalar> newc(c.size()+p.c.size()-1,0);
-	for (int i1=0;i1<c.size();i1++)		
-		for (auto i2=0;i2<p.c.size();i2++)
-			newc[i1+i2]+=c[i1]*p.c[i2];	
-	c=newc;
-	return trimZeros();*/
 	*this=*this*p;
 	return *this;
 }
@@ -138,7 +132,6 @@ std::ostream & operator << (std::ostream & str, polynomial const & r)
 	{
 		if (*it != 0) 
 		{
-			//if (!firsttime) str << " ";
 			//coefficient
 			if (*it==1 && n>0) str << (firsttime? "" : "+");
 			else if (*it==-1 && n>0) str << "-";
@@ -187,11 +180,6 @@ std::vector<scalar> & polynomial::trimZeros(std::vector<scalar> & v)
 
 polynomial & polynomial::trimZeros()
 {
-	/*auto it=c.rbegin();
-	while(it!=c.rend() && *it==0) it++;
-	c.erase(it.base(), c.end());
-	if (c.size()==0) c.push_back(0.0);
-	return *this;*/
 	trimZeros(c);
 	return *this;
 }

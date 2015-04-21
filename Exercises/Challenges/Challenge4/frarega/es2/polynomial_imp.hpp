@@ -110,39 +110,31 @@ polynomial<N+M> operator*(polynomial<N> const & a ,polynomial<M> const & b)
 
 
 template<unsigned N, unsigned M>
-std::pair<polynomial<mymax(N-M,0)>, polynomial<M>>  operator/(polynomial<N> const & a,polynomial<M> const & b)
+std::pair<polynomial<N>, polynomial<N>>  operator/(polynomial<N> const & a,polynomial<M> const & b)
 {
-	/*int nb=b.c.size();
-	int nr=a.c.size();
-	std::vector<scalar>::const_iterator itb;
-	std::vector<scalar>::iterator itr;
-	if (nb==1 && b.c[0]==0) throw std::runtime_error("Division by zero");
-	if (nb>a.c.size()) return std::pair<polynomial, polynomial>(polynomial({0}),a);
-	std::vector<scalar> q(a.c.size()-nb+1,0.0),r(a.c);
+	std::pair<polynomial<N>, polynomial<N>> ret (polynomial<N>(), a);
+	
+	auto itq=ret.first.c.rbegin()+M, eq=ret.first.c.rend();//itq point to the term of the quotien i'm going to write in
+	auto itmaxr=ret.second.c.rbegin(), itr=ret.second.c.rbegin(), er=ret.second.c.rend();//itmaxr point to the leading coefficient of the remainder
+	auto itmaxb=b.c.rbegin(), itb=b.c.rbegin(), eb=b.c.rend();//itmaxb point to the leading coefficient of the divisor
+	while (*itmaxb==0)
+	{
+		itmaxb++;
+		itq--;
+		//degb--;
+		if (itmaxb==eb) throw std::runtime_error("Division by zero");
+	}
+	if (itq>=eq) return ret;
 	while(true)
 	{
-		scalar d=r[nr-1]/b.c[nb-1];
-		q[nr-nb]=d;
-		itb = b.c.begin();
-		itr = r.begin() + nr-nb;
-		for (int i=0;i<nb-1;i++) *(itr++)-=(*itb++)*d;
-		*itr=0;
-		polynomial::trimZeros(r);
-		nr=r.size();
-		if (nr<nb || (nr==1 && r[0]==0)) return std::pair<polynomial, polynomial>(polynomial(q),polynomial(r));
-	}*/
+		while (*itmaxr==0)  if ((++itmaxr)==er || (++itq)==eq) return ret;
+		*itq=(*itmaxr)/(*itmaxb);
+		*itmaxr=0; //just to be sure that rounding errors don't lead to unconsistent results
+		itb=itmaxb+1;
+		itr=itmaxr+1;
+		while (itb!=eb && itr!=er) *(itr++)-=(*itb++)*(*itq);
+	}
 }
-
-/*template <unsigned N>
-constexpr scalar mypow(scalar const & x) { return x*mypow<N-1>(x); }
-
-template <unsigned D>
-template <unsigned N>
-constexpr scalar polynomial<D>::eval(scalar const & x) { return c[N] * mypow<N>(x) + eval<N-1>(x); }
-
-template <unsigned D>
-template <>
-constexpr scalar polynomial<D>::eval(scalar const & x) { return c[N] * mypow<N>(x) + eval<N-1>(x); }*/
 
 template <unsigned D>
 scalar polynomial<D>::operator()(scalar const & x) const

@@ -16,7 +16,7 @@ class polynomial
 public:
 	polynomial();
 
-	//Initializator: coefficent are given beginning with the constant term
+	//Initializator: coefficent are given from the constant term to the leading term
 	polynomial(std::array<scalar,D + 1> const);
 
 	polynomial(polynomial const &)=default;
@@ -47,7 +47,7 @@ public:
 
 	//returns the quotient and the remainder in a pair a polynomials
 	template<unsigned N, unsigned M>
-	friend std::pair<polynomial<mymax(N-M,0)>, polynomial<M>>  operator/(polynomial<N> const &,polynomial<M> const &);
+	friend std::pair<polynomial<N>, polynomial<N>>  operator/(polynomial<N> const &,polynomial<M> const &);
 	
 	//! Evaluation
 	scalar operator()(scalar const &) const;
@@ -55,7 +55,7 @@ public:
 	//! Get the value of the desired coefficient
 	scalar GetCoefficient(unsigned) const;
 
-	//! Get the degree of the polynomial
+	//! Get the degree of the template class (the actual degree of the polynomial may be fewer than this!)
 	constexpr unsigned GetDegree() const;
 
 	//! Output streaming operator	
@@ -64,9 +64,8 @@ public:
 	
 
 	//! Input streaming operator
-	/*! Coefficent are given beginning with the constant term, 
-	    and must be separated with spaces. 
-	    The return carriage terminates the sequence
+	/*! Coefficent are given from the constant term to the leading term and must be separated with spaces. 
+	    Just type "Enter" terminate the sequence
 	*/	
 	template<unsigned N>
 	friend std::istream & operator >> (std::istream &, polynomial<N> &);
@@ -74,7 +73,7 @@ public:
 	
 
 private:
-	//! stores the coefficients (from 0 degree to n degree)
+	//! stores the coefficients (from the constant term to the leading term)
 	std::array<scalar, D+1> c;
 	
 	//! generically implements += and -= operators
@@ -84,13 +83,7 @@ private:
 	//! generically implements + and - operators
 	template<unsigned N, unsigned M, int S>
 	friend polynomial<mymax(N,M)> algebraicplus (polynomial<N> const &, polynomial<M> const &);
-	
-	//template <unsigned N>
-	//constexpr scalar eval(scalar const &);
 
-
-	//template<unsigned N>
-//	friend class polyEvaluator<D,N>;
 };
 
 #include "polynomial_imp.hpp"
