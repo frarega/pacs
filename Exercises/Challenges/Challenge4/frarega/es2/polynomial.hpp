@@ -5,8 +5,6 @@
 #include <array>
 #include <initializer_list>
 #include "scalar.hpp"
-//#include "polyEvaluator.hpp"	
-
 
 constexpr unsigned mymax(unsigned const & n, unsigned const & m) { return n>m?n:m; }
 
@@ -16,7 +14,7 @@ class polynomial
 public:
 	polynomial();
 
-	//Initializator: coefficent are given from the constant term to the leading term
+	//! Initializator: coefficent are given from the constant term to the leading term
 	polynomial(std::array<scalar,D + 1> const);
 
 	polynomial(polynomial const &)=default;
@@ -26,16 +24,15 @@ public:
 	polynomial &operator +=(polynomial<N> const &);
 	template<unsigned N>
 	polynomial &operator -=(polynomial<N> const &);
-	//polynomial &operator *=(polynomial const &);
 	polynomial operator-() const;
 	polynomial operator+() const;
-	//adds 1 to the constant term
+	//! adds 1 to the constant term
 	polynomial & operator++();
-	//adds 1 to the constant term
+	//! adds 1 to the constant term
 	polynomial operator++(int);
-	//removes 1 from the constant term
+	//! removes 1 from the constant term
 	polynomial & operator--();
-	//removes 1 from the constant term
+	//! removes 1 from the constant term
 	polynomial operator--(int);
 	template<unsigned N, unsigned M>
 	friend polynomial<mymax(N,M)> operator+(polynomial<N> const &,polynomial<M> const &);
@@ -45,7 +42,11 @@ public:
 	template<unsigned N, unsigned M>
 	friend polynomial<N+M> operator*(polynomial<N> const &,polynomial<M> const &);
 
-	//returns the quotient and the remainder in a pair a polynomials
+	//! returns the quotient and the remainder in a pair a polynomials
+	/*! The maximum size of both the quotient and the remainder is N. Indeed, in case of the divisor has formally M>1 degree,
+	    but the only non-zero coefficient is the first one, the quotient's degree equals N; On the other hand, if the quotient
+	    is 0, the remainder will be the dividend itself.
+	*/
 	template<unsigned N, unsigned M>
 	friend std::pair<polynomial<N>, polynomial<N>>  operator/(polynomial<N> const &,polynomial<M> const &);
 	

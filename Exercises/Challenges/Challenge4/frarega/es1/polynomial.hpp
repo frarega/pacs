@@ -10,9 +10,9 @@ class polynomial
 {
 public:
 	polynomial();
-	//Initializator: coefficent are given from the constant term to the leading term
+	//! Initializator: coefficent are given from the constant term to the leading term
 	polynomial(std::vector<scalar> const);
-	//Initializator: coefficent are given from the constant term to the leading term
+	//! Initializator: coefficent are given from the constant term to the leading term
 	polynomial(std::initializer_list<scalar> const);
 	polynomial(polynomial const &)=default;
 	polynomial& operator=(polynomial const &)=default;
@@ -22,18 +22,18 @@ public:
 	polynomial &operator *=(polynomial const &);
 	polynomial operator-() const;
 	polynomial operator+() const;
-	//adds 1 to the constant term
+	//! adds 1 to the constant term
 	polynomial & operator++();
-	//adds 1 to the constant term
+	//! adds 1 to the constant term
 	polynomial operator++(int);
-	//removes 1 from the constant term
+	//! removes 1 from the constant term
 	polynomial & operator--();
-	//removes 1 from the constant term
+	//! removes 1 from the constant term
 	polynomial operator--(int);
 	friend polynomial operator+(polynomial const &,polynomial const &);
 	friend polynomial operator-(polynomial const &,polynomial const &);
 	friend polynomial operator*(polynomial const &,polynomial const &);
-	//returns the quotient and the remainder in a pair a polynomials
+	//! returns the quotient and the remainder in a pair a polynomials
 	friend std::pair<polynomial, polynomial>  operator/(polynomial const &,polynomial const &);
 	
 	//! Evaluation
@@ -62,14 +62,7 @@ private:
 	polynomial & trimZeros();
 	//! generically implements += and -= operators
 	template<int S>
-	polynomial & algebraicplusequal (polynomial const & p)
-	{
-		if (p.c.size()>c.size()) c.resize(p.c.size());
-		auto i1=c.begin(), e1=c.end();
-		auto i2=p.c.begin();
-		while (i1<e1) *(i1++)+=*(i2++)*S;
-		return trimZeros();
-	};
+	polynomial & algebraicplusequal (polynomial const & p);
 };
 
 #endif

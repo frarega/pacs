@@ -1,9 +1,11 @@
 #include <iostream>
+#include <complex>	
 #include "polynomial.hpp"
 
 using namespace std;
 
-void test(polynomial a, polynomial b)
+template<unsigned N, unsigned M,typename scalar>
+void test(polynomial<N,scalar> a, polynomial<M,scalar> b)
 {
 	cout << "a = "<< a << endl;
 	cout << "\tdegree: " << a.GetDegree()<< endl;
@@ -20,10 +22,24 @@ void test(polynomial a, polynomial b)
 	cout << "b(-1) = " << b(-1) << endl;
 	cout << "b(0.5) = " << b(0.5) << endl<<endl;
 	cout << "a+b = "<< a+b << endl;
-	cout << "a-b = "<< a-b << endl;
-	cout << "a+=b: "<< (a+=b) << endl;
+	cout << "a-d = "<< a-b << endl;
+	try
+	{
+		cout << "a+=b: "<< (a+=b) << endl;
+	}
+	catch (exception& e)
+	{
+		cout << e.what() << endl;
+	}
 	cout << "a = "<< a << endl;
-	cout << "a-=b: "<< (a-=b) << endl;
+	try
+	{
+		cout << "a-=b: "<< (a-=b) << endl;
+	}
+	catch (exception& e)
+	{
+		cout << e.what() << endl;
+	}
 	cout << "a = "<< a << endl;
 	cout << "a++ = "<< a++ << endl;
 	cout << "a = "<< a << endl;
@@ -39,7 +55,7 @@ void test(polynomial a, polynomial b)
 	{
 		auto div1= a/b;
 		cout << "\tquotient = " << div1.first << endl << "\tremainder = "<< div1.second << endl;
-		cout << "\ttest: quotient*dividend+remainder= " << div1.first*b + div1.second << endl;
+		cout << "\ttest: quotient*dividend+remainder= " << div1.first* b + div1.second << endl;
  	}
 	catch (exception& e)
 	{
@@ -50,12 +66,7 @@ void test(polynomial a, polynomial b)
 	{
 		auto div2= b/a;
 		cout << "\tquotient = " << div2.first << endl << "\tremainder = "<< div2.second << endl;
-		auto rrr=div2.first*a;
-		cout << rrr<<endl;
-		cout << div2.second<<endl;
-		auto bbb=rrr+div2.second;		
-		cout << bbb<<endl;
-		cout << "\ttest: quotient*dividend+remainder= " << div2.first*a + div2.second << endl;
+		cout << "\ttest: quotient*dividend+remainder= " << div2.first* a + div2.second << endl;
  	}
 	catch (exception& e)
 	{
@@ -66,16 +77,18 @@ void test(polynomial a, polynomial b)
 
 int main()
 {
-	test(polynomial({-1,1,0}),polynomial({0}));
-	test(polynomial({3,4,5}),polynomial({2,3}));
-	//test(polynomial({1,1}),polynomial({1,1}));
-
-	polynomial a,b;
-	cout << "Insert a polynomial:"<<endl;
+	test(polynomial<2,float>({-1,1,0}),polynomial<2,float>({0}));
+	test(polynomial<2,double>({3,4,5}),polynomial<1,double>({2,3}));
+	test(polynomial<2,complex<double>>({3,4,complex<double>(5,2)}),polynomial<1,complex<double>>({complex<double>(0,1),3}));
+	
+	cout << "Insert a 4th degree complex polynomial (type \"(x,y)\" to insert x+yi, or just \"x\" for real coefficients):"<<endl;
+	polynomial<4,complex<double>> a;
 	cin>>a;
-	cout << "Insert another polynomial:"<<endl;
+	cout << "Now insert a 3th degree complex polynomial:"<<endl;
+	polynomial<3,complex<double>> b;
 	cin>>b;
 	test(a,b);
 
 	return 0;
 }
+

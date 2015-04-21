@@ -184,4 +184,13 @@ polynomial & polynomial::trimZeros()
 	return *this;
 }
 
+template<int S>
+polynomial & polynomial::algebraicplusequal (polynomial const & p)
+{
+	if (p.c.size()>c.size()) c.resize(p.c.size());
+	auto i1=c.begin(), e1=c.end();
+	auto i2=p.c.begin(), e2=p.c.end();
+	while (i1<e1 && i2<e2) *(i1++)+=*(i2++)*S;
+	return trimZeros();
+}
 
