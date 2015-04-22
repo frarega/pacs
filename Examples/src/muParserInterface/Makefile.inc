@@ -1,4 +1,4 @@
 LIBRARY_NAME=muParserInterface
 STATIC_LIBFILE=lib$(LIBRARY_NAME).a
 DYNAMIC_LIBFILE=lib$(LIBRARY_NAME).so
-LDLIBS+=-lmuparser -L. -l$(LIBRARY_NAME)
+LDLIBS+= $(LIBD) -lmuparser -L. -l$(LIBRARY_NAME)
