@@ -50,11 +50,6 @@ void test(polynomial a, polynomial b)
 	{
 		auto div2= b/a;
 		cout << "\tquotient = " << div2.first << endl << "\tremainder = "<< div2.second << endl;
-		auto rrr=div2.first*a;
-		cout << rrr<<endl;
-		cout << div2.second<<endl;
-		auto bbb=rrr+div2.second;		
-		cout << bbb<<endl;
 		cout << "\ttest: quotient*dividend+remainder= " << div2.first*a + div2.second << endl;
  	}
 	catch (exception& e)

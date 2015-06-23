@@ -1,4 +1,4 @@
-CXXFLAGS = -std=c++11
+CXXFLAGS =-Wall -std=c++11
 
 main: polynomial.o main.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $^ 

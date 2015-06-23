@@ -101,8 +101,8 @@ template<unsigned N, unsigned M>
 polynomial<N+M> operator*(polynomial<N> const & a ,polynomial<M> const & b)
 {
 	polynomial<N+M> temp;
-	for (int i1=0;i1<a.c.size();i1++)		
-		for (auto i2=0;i2<b.c.size();i2++)
+	for (unsigned i1=0;i1<a.c.size();i1++)		
+		for (unsigned i2=0;i2<b.c.size();i2++)
 			temp.c[i1+i2]+=a.c[i1]*b.c[i2];
 	return temp;
 

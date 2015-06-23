@@ -76,16 +76,16 @@ polynomial operator -(polynomial const &a, polynomial const & b)
 polynomial operator *(polynomial const &a, polynomial const & b)
 {
 	std::vector<scalar> newc(a.c.size()+b.c.size()-1,0);
-	for (int i1=0;i1<a.c.size();i1++)		
-		for (auto i2=0;i2<b.c.size();i2++)
+	for (unsigned i1=0;i1<a.c.size();i1++)		
+		for (unsigned i2=0;i2<b.c.size();i2++)
 			newc[i1+i2]+=a.c[i1]*b.c[i2];
 	return polynomial(newc);
 }
 
 std::pair<polynomial, polynomial> operator /(polynomial const &a, polynomial const & b)
 {
-	int nb=b.c.size();
-	int nr=a.c.size();
+	unsigned nb=b.c.size();
+	unsigned nr=a.c.size();
 	std::vector<scalar>::const_iterator itb;
 	std::vector<scalar>::iterator itr;
 	if (nb==1 && b.c[0]==0) throw std::runtime_error("Division by zero");
@@ -97,7 +97,7 @@ std::pair<polynomial, polynomial> operator /(polynomial const &a, polynomial con
 		q[nr-nb]=d;
 		itb = b.c.begin();
 		itr = r.begin() + nr-nb;
-		for (int i=0;i<nb-1;i++) *(itr++)-=(*itb++)*d;
+		for (unsigned i=0;i<nb-1;i++) *(itr++)-=(*itb++)*d;
 		*itr=0;
 		polynomial::trimZeros(r);
 		nr=r.size();
